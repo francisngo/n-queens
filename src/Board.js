@@ -62,7 +62,7 @@
     },
 
 
-/*
+ /*
          _             _     _
      ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
     / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
@@ -107,7 +107,25 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      var column = [];
+      for (var i = 0; i < this.attributes.n; i += 1) {
+        column.push(this.get(i)[colIndex]); //col = this.get(i)[colIndex]
+      }
+      var conflictCount = column.reduce(function(add, num) {
+        return add + num;
+      });
+      return conflictCount > 1 ? true : false;
+
+      //var count = column.reduce(function(add, num) {
+      //  return add + num
+      //});
+      //return count !== 1;
+
+      //get length of matrix = n
+        //iterate up to n
+        //get one piece of the row
+        //shovel this into column array
+        //iterate over column array to check if there's any conflicts
     },
 
     // test if any columns on this board contain conflicts
@@ -115,7 +133,8 @@
       var matrixLength = this.attributes.n;
       //console.log(matrixLength);
       for (var i = 0; i < matrixLength; i++) {
-        if (this.hasRowConflictAt(i)) {
+        //this[i][0] is iterating from top to bottom
+        if (this.hasColConflictAt(i)) {
           return true;
         }
       }
