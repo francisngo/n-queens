@@ -147,43 +147,31 @@
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
       var matrixLength = this.attributes.n;
-      var column = majorDiagonalColumnIndexAtFirstRow; //column = -2;
       var count = 0;
-      var result = false;
-
-      //iterate through up to the number of matrixLength
-        //if column is greater than/equal to 0 (to the right of big diagonal [0,0] => [3,3])
-          //increment count++
-            //if count is greater than 1 => return true
-        //otherwise increment column (for the negative numbers)
-      //return result
-
-      for (var i = 0; i < matrixLength && column < matrixLength; i++) {
+      var column = majorDiagonalColumnIndexAtFirstRow;
+      for (var i = 0; i < matrixLength && column < matrixLength; i++, column++) {
         if (column >= 0) {
           if (this.attributes[i][column] === 1) {
             count++;
             if (count > 1) {
-              result = true;
+              return true;
             }
           }
-        }
-        column++;
-      }
-      return result;
-    },
-
-    // test if any major diagonals on this board contain conflicts
-    hasAnyMajorDiagonalConflicts: function() {
-      var matrixLength = this.attributes.n;
-      //negative numbers count to the left of big diagonal once it reaches 0 it starts counting right of big diagonal
-      for (var i = -matrixLength + 2; i < matrixLength; i++) {
-        if (this.hasMajorDiagonalConflictAt(i)) {
-          return true;
         }
       }
       return false;
     },
 
+    // test if any major diagonals on this board contain conflicts
+    hasAnyMajorDiagonalConflicts: function() {
+      var matrixLength = this.attributes.n;
+      for (var i = -matrixLength + 1; i < matrixLength; i++) {
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
+      return false; // fixme
+    },
 
 
     // Minor Diagonals - go from top-right to bottom-left
