@@ -174,7 +174,6 @@
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      debugger;
       var matrixLength = this.attributes.n;
       //negative numbers count to the left of big diagonal once it reaches 0 it starts counting right of big diagonal
       for (var i = -matrixLength + 2; i < matrixLength; i++) {
