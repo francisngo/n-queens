@@ -13,8 +13,25 @@
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 window.findNRooksSolution = function(n) {
-  var solution = undefined;
-  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
+  var myBoard = new Board({n: n});
+  var solution = myBoard.rows();
+
+  var traverseRows = function(row) {
+    if (row === n) {
+      return solution = myBoard.rows().map(function(row) {
+        return row.slice();
+      });
+    }
+    for (var i = 0; i < n; i++) {
+      myBoard.togglePiece(row, i);
+      if (!myBoard.hasAnyRooksConflicts()) {
+        traverseRows(row + 1);
+      }
+      myBoard.togglePiece(row, i);
+    }
+  };
+  traverseRows(0);
+  console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solution;
 };
 
@@ -53,11 +70,16 @@ window.countNRooksSolutions = function(n) {
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
   var myBoard = new Board({n: n});
+
+  //Why does this not work?
+  //var solution;
+
+  //But this does?
   var solution = myBoard.rows();
 
   var traverseRows = function(row) {
     if (row === n) {
-      return solution = myBoard.rows().map(function(row) { 
+      return solution = myBoard.rows().map(function(row) {
         return row.slice();
       });
     }
