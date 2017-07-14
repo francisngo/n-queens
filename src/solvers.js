@@ -13,8 +13,18 @@
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 window.findNRooksSolution = function(n) {
-  var solution = []; //fixme
-  //solution = grabbing soluton of countNRooksSolutions[n]
+
+  // var myBoard = new Board({n: n});
+  //
+  // //iterate through the rows
+  // for (var i = 0; i < n; i++) {
+  //   //toggle pieces
+  //   myBoard.togglePiece(i, column);
+  //   if (myBoard.hasAnyRooksConflicts()) {
+  //     myBoard.togglePiece(i, column);
+  //   }
+  // }
+
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
 };
@@ -61,8 +71,37 @@ window.findNQueensSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  var solutionCount = 0; //fixme
+  //create a board based on given n value
+  var myBoard = new Board({n: n});
 
-  console.log('Number of solutions for ' + n + ' queens:', solutionCount);
+  if (n === 2 || n === 3) {
+    return solutionCount;
+  }
+
+  var traverseRow = function(row) {
+    // debugger;
+    //base case
+    //completed entire row traversal
+    if (row === n) {  //0 === 4 X
+      solutionCount++;
+      return;
+    }
+    //iterate through the rows
+    for (var i = 0; i < n; i++) {
+      //togglePiece on column
+      myBoard.togglePiece(row, i);
+      //if the row has no conflicts on column and row
+        //traverseRow next row until count reaches limit of matrix (n)
+      if (!myBoard.hasAnyQueensConflicts()) {
+        traverseRow(row + 1);
+      }
+      //untoggle the piece on the column
+      myBoard.togglePiece(row, i); //0, 0
+    }
+  };
+
+  traverseRow(0);
+  console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
